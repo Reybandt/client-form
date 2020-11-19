@@ -1,0 +1,62 @@
+$bt_submit_color: lightgreen
+$bt_address_color: lightskyblue
+$bt_document_color: lightcyan
+$border_color: #7a7b7e
+$error_color: red
+
+=padding($fz, $bt_color, $pz1, $pz2)
+  background-color: $bt_color
+  font-size: $fz
+  padding: $pz1 $pz2
+
+%border-shared
+  border: 1px solid $border_color
+  border-radius: 5px
+
+body
+  font-family: sans-serif
+  margin: 50px 20px 50px 200px
+
+label, input, select
+  display: block
+  margin-bottom: 5px
+
+input, select
+  @extend %border-shared
+  width: 40%
+  height: 25px
+
+label
+  margin-left: 10px
+  font-size: 15px
+
+button
+  @extend %border-shared
+  text-align: center
+  display: inline-block
+  margin-left: 10px
+  margin-bottom: 13px
+
+.form-group
+  margin-bottom: 15px
+
+.error
+  font-style: italic
+  color: $error_color
+  margin-left: 10px
+  font-size: 15px
+
+.form__select_multiple
+  height: 50px
+
+.form__input_checkbox
+  width: 20px
+
+.btn_submit
+  +padding(16px, $bt_submit_color, 10px, 20px)
+
+.btn_address
+  +padding(15px, $bt_address_color, 5px, 10px)
+
+.btn_document
+  +padding(15px, $bt_document_color, 5px, 10px)

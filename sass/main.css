@@ -1,0 +1,70 @@
+button, input, select {
+  border: 1px solid #7a7b7e;
+  border-radius: 5px;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 50px 20px 50px 200px;
+}
+
+label, input, select {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input, select {
+  width: 40%;
+  height: 25px;
+}
+
+label {
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+button {
+  text-align: center;
+  display: inline-block;
+  margin-left: 10px;
+  margin-bottom: 13px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.error {
+  font-style: italic;
+  color: red;
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.form__select_multiple {
+  height: 50px;
+}
+
+.form__input_checkbox {
+  width: 20px;
+}
+
+.btn_submit {
+  background-color: lightgreen;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+.btn_address {
+  background-color: lightskyblue;
+  font-size: 15px;
+  padding: 5px 10px;
+}
+
+.btn_document {
+  background-color: lightcyan;
+  font-size: 15px;
+  padding: 5px 10px;
+}
+
+/*# sourceMappingURL=main.css.map */
