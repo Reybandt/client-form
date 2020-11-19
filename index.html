@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./sass/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="./node_modules/vuelidate/vuelidate.min.js"></script>
+    <script src="./node_modules/vuelidate/validators.min.js"></script>
+    <title>Client form</title>
+</head>
+<body>
+<div id="app">
+    <h1>Форма создания Клиента</h1>
+    <form @submit="SubmitForm">
+        <div class="form-group">
+            <label class="form__label">Фамилия</label>
+            <input class="form__input" v-model.trim="form.surname">
+            <span class="error" v-if="!$v.form.surname.required">*Обязательное поле</span>
+        </div>
+
+        <div class="form-group">
+            <label class="form__label">Имя</label>
+            <input class="form__input" v-model.trim="form.name">
+            <span class="error" v-if="!$v.form.name.required">*Обязательное поле</span>
+        </div>
+
+        <div class="form-group">
+            <label class="form__label">Отчество</label>
+            <input class="form__input" v-model.trim="form.second_name">
+        </div>
+
+        <div class="form-group">
+            <label class="form__label">Дата рождения</label>
+            <input class="form__input" v-model="form.date_of_birth" placeholder="В формате: дд-мм-гггг">
+            <span class="error" v-if="!$v.form.date_of_birth.required">*Обязательное поле</span>
+            <span class="error" v-if="!$v.form.date_of_birth.formatDate">*Неверный формат</span>
+        </div>
+
+        <div class="form-group">
+            <label class="form__label">Номер телефона</label>
+            <input class="form__input" v-model="form.phone_number" placeholder="В формате: 79187777777">
+            <span class="error" v-if="!$v.form.phone_number.required">*Обязательное поле</span>
+            <span class="error" v-if="!$v.form.phone_number.numeric">*Только цифры допустимы</span>
+            <span class="error" v-if="!$v.form.phone_number.minLength || !$v.form.phone_number.maxLength">*Поле должно включать ровно 11 символов</span>
+        </div>
+
+        <div class="form-group">
+            <label class="form__label" for="gender">Пол</label>
+            <select id="gender" class="form__input" v-model="form.gender">
+                <option>Мужчина</option>
+                <option>Женщина</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form__label" for="client_group">Группа клиентов</label>
+            <select id="client_group" class="form__select_multiple" v-model="form.client_group" multiple>
+                <option>VIP</option>
+                <option>Проблемные</option>
+                <option>ОМС</option>
+            </select>
+            <span class="error" v-if="!$v.form.client_group.required">*Обязательное поле</span>
+        </div>
+
+        <div class="form-group">
+            <label class="form__label" for="doctor">Лечащий врач</label>
+            <select id="doctor" class="form__input" v-model="form.doctor">
+                <option>Иванов</option>
+                <option>Захаров</option>
+                <option>Чернышева</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form__label">Не отправлять СМС</label>
+            <input type="checkbox" class="form__input_checkbox" v-model="form.notifications">
+        </div>
+
+        <div class="form-group">
+            <span>
+                <button class="btn_address" @click.prevent="(address_boolen = !address_boolen) && (document_boolen = false)">Адрес (есть обязательные поля)</button>
+                <button class="btn_document" @click.prevent="(document_boolen = !document_boolen) && (address_boolen = false)">Документ (есть обязательные поля)</button>
+            </span>
+        </div>
+
+        <div v-if="address_boolen">
+            <div class="form-group">
+                <label class="form__label">Индекс</label>
+                <input class="form__input" v-model.number="address.index">
+            </div>
+
+            <div class="form-group">
+                <label class="form__label">Страна</label>
+                <input class="form__input" v-model.trim="address.country">
+            </div>
+
+            <div class="form-group">
+                <label class="form__label">Область</label>
+                <input class="form__input" v-model.trim="address.region">
+            </div>
+
+            <div class="form-group">
+                <label class="form__label">Город</label>
+                <input class="form__input" v-model.trim="address.city">
+                <span class="error" v-if="!$v.address.city.required">*Обязательное поле</span>
+            </div>
+
+            <div class="form-group">
+                <label class="form__label">Улица</label>
+                <input class="form__input" v-model.trim="address.street">
+            </div>
+
+            <div class="form-group">
+                <label class="form__label">Дом</label>
+                <input class="form__input" v-model.trim="address.house">
+            </div>
+        </div>
+
+        <div v-if="document_boolen">
+            <div class="form-group">
+                <label class="form__label" for="doctor">Тип документа</label>
+                <select class="form__input" v-model="document.type">
+                    <option>Паспорт</option>
+                    <option>Свидетельство о рождении</option>
+                    <option>Вод. удостоверение</option>
+                </select>
+                <span class="error" v-if="!$v.document.type.required">*Обязательное поле</span>
+            </div>
+
+            <div class="form-group">
+                <label class="form__label">Серия</label>
+                <input class="form__input" v-model.number="document.series">
+            </div>
+
+            <div class="form-group">
+                <label class="form__label">Номер</label>
+                <input class="form__input" v-model.number="document.number">
+            </div>
+
+            <div class="form-group">
+                <label class="form__label">Кем выдан</label>
+                <input class="form__input" v-model.number="document.issued_by">
+            </div>
+
+            <div class="form-group">
+                <label class="form__label">Дата выдачи</label>
+                <input class="form__input" v-model="document.date_of_issue" placeholder="В формате: дд-мм-гггг">
+                <span class="error" v-if="!$v.document.date_of_issue.required">*Обязательное поле</span>
+                <span class="error" v-if="!$v.document.date_of_issue.formatDate">*Неверный формат</span>
+            </div>
+        </div>
+
+        <div>
+            <button class="btn_submit" :disabled="$v.form.$invalid">Отправить</button>
+        </div>
+    </form>
+</div>
+</body>
+<script src="app.js"></script>
+</html>
